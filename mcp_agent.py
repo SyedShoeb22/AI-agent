@@ -320,7 +320,10 @@ def maybe_refine_with_llm(title: str, html: str, skill: str, which: str) -> str:
     if not (OPENAI_API_KEY and OpenAI):
         print("LLM disabled (missing key or SDK). Returning template output.", file=sys.stderr)
         return html
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(
+        api_key=OPENAI_API_KEY,
+        base_url="https://openrouter.ai/api/v1")
+
     prompt = f"""
 You are an expert CV editor. Improve the following {which} HTML so it's concise, impact-focused, and tailored to the skill "{skill}".
 Preserve HTML structure but fix phrasing and make bullets achievement-oriented with measurable impact where appropriate.
